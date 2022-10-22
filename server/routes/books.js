@@ -29,14 +29,14 @@ router.get('/details', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
-     book.find( (err, books) => {
+     book.find( (err, showbooks) => {
       if (err) {
         return console.error(err);
       }
       else {
         res.render('books/details', {
           title: 'Books',
-          books: books
+          books: showbooks
         });
       }
     });
@@ -71,14 +71,14 @@ router.post('/details', (req, res, next) => {
     
 
 // GET the Book Details page in order to edit an existing Book
-router.get('edit/:id', (req, res, next) => {
+router.get('/details/edit/:id', (req, res, next) => {
 
     /*****************
      * ADD CODE HERE *
      *****************/
      let id = req.params.id;
 
-     book.findById(id, (err, books) => {
+     book.findById(id, (err, editbooks) => {
          if(err)
          {
              console.log(err);
@@ -86,9 +86,9 @@ router.get('edit/:id', (req, res, next) => {
          }
          else
          {
-             res.render('books/details', {
+             res.render('books/edit', {
                  title: "Books",
-                 books: books
+                 books: editbooks
              })  
          }
      })
@@ -96,14 +96,14 @@ router.get('edit/:id', (req, res, next) => {
 });
 
 // POST - process the information passed from the details form and update the document
-router.post('edit/:id', (req, res, next) => {
+router.post('/details/edit/:id', (req, res, next) => {
 
     /*****************
      * ADD CODE HERE *
      *****************/
 
      let id = req.params.id;
-
+     const {Title, Price, Author, Genre, Description} = req.body;
      const editBook = new book({
       _id: id,
       Title,
@@ -120,7 +120,7 @@ router.post('edit/:id', (req, res, next) => {
          }
          else
          {
-             res.redirect('/');
+             res.redirect('/books');
          }
      });
 
@@ -135,7 +135,7 @@ router.get('/delete/:id', (req, res, next) => {
 
      let id = req.params.id;
 
-     Contact.remove({_id: id}, (err) => {
+     book.remove({_id: id}, (err) => {
          if(err)
          {
              console.log(err);
