@@ -14,4 +14,12 @@ router.get('/', (req, res, next) => {
    });
 });
 
+// router.get('/books', (req, res, next) => {
+//   res.render('books/', {
+//     title: 'Home',
+//     books: 'book'
+//    });
+// });
+
+
 module.exports = router;
